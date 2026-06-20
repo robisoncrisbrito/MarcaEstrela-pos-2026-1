@@ -1,5 +1,6 @@
 package br.edu.utfpr.marcaestrela
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var imagem: ImageView
     private lateinit var btOnOff: Button
+    private lateinit var btConfiguracoes: Button
 
     private var isChecked = false
 
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         imagem = findViewById(R.id.imagem)
         btOnOff = findViewById(R.id.btOnOff)
+        btConfiguracoes = findViewById(R.id.btConfiguracoes)
+
 
         sharedPreference = getSharedPreferences( "PREFERENCE_FILE", MODE_PRIVATE)
         isChecked = sharedPreference.getBoolean("isChecked", false)
@@ -46,6 +50,11 @@ class MainActivity : AppCompatActivity() {
 
         btOnOff.setOnClickListener {
             btOnOffOnClick()
+        }
+
+        btConfiguracoes.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity( intent )
         }
     }
 
