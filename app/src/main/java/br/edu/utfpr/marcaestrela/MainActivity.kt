@@ -1,5 +1,6 @@
 package br.edu.utfpr.marcaestrela
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     private var isChecked = false
 
+    private lateinit var sharedPreference: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +30,19 @@ class MainActivity : AppCompatActivity() {
 
         imagem = findViewById(R.id.imagem)
         btOnOff = findViewById(R.id.btOnOff)
+
+        sharedPreference = getSharedPreferences( "PREFERENCE_FILE", MODE_PRIVATE)
+        isChecked = sharedPreference.getBoolean("isChecked", false)
+
+        when ( isChecked ) {
+            false -> {
+                imagem.setImageResource(android.R.drawable.btn_star_big_off)
+            }
+            true -> {
+                imagem.setImageResource(android.R.drawable.btn_star_big_on)
+            }
+        }
+
 
         btOnOff.setOnClickListener {
             btOnOffOnClick()
@@ -46,6 +62,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        var editor = sharedPreference.edit()
+        editor.putBoolean("isChecked", isChecked )
+        editor.apply()
     }
 
 } //fim da MainActivity
